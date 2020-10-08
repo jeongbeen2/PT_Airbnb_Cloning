@@ -9,6 +9,7 @@ verify_ssl = true
 django = "==2.2.5"
 flake8 = "*"
 black = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

@@ -8,7 +8,7 @@ from . import models
 class CustomUserAdmin(UserAdmin):
     """ Custom User Admin """
 
-    add_fieldsets = (
+    fieldsets = UserAdmin.fieldsets + (
         (
             "NewBox",
             {

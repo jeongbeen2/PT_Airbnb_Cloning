@@ -10,6 +10,7 @@ django = "==2.2.5"
 flake8 = "*"
 black = "*"
 pillow = "*"
+django-countries = "*"
 
 [requires]
 python_version = "3.8"

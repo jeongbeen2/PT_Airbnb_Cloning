@@ -106,9 +106,7 @@ class RoomAdmin(admin.ModelAdmin):
     """ list_display에 count_amenities 입력 후, def 지정. """
 
     def count_amenities(self, obj):
-        return "potato"
-
-    count_amenities.short_description = "hello sexy!"
+        return obj.amenities.count()
 
 
 @admin.register(models.Photo)

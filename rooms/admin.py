@@ -7,6 +7,15 @@ from . import models
 class ItemAdmin(admin.ModelAdmin):
     """ Item Admin Definition """
 
+    list_display = (
+        "name",
+        "used_by",
+    )
+    """#7.3 => room_type을 가진 모든 방의 갯수를 보여주고 싶으므로. 아래와같이 한다. """
+
+    def used_by(self, obj):
+        return obj.rooms.count()
+
     pass
 
 
@@ -70,6 +79,7 @@ class RoomAdmin(admin.ModelAdmin):
         "check_out",
         "instant_book",
         "count_amenities",
+        "count_photos",
     )
     """ #6.2 => ordering으로, 내가 지정해서 정렬해줄수도 있다. """
     ordering = (
@@ -107,6 +117,10 @@ class RoomAdmin(admin.ModelAdmin):
 
     def count_amenities(self, obj):
         return obj.amenities.count()
+
+    def count_photos(self, obj):
+        return obj.photos.count()
+        """ photos는 models.py > class photo > room > related_name = "photos" 연결. """
 
 
 @admin.register(models.Photo)

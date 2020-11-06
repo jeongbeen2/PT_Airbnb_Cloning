@@ -26,3 +26,14 @@ class Review(core_models.TimeStampedModel):
         """ ex2) self.room.host.username """
         """ 만일, 부르려는 값의 __str__값이 정의되어있으면 그값을 가져온다. """
         return f"{self.user} says : {self.review}"
+
+    def rating_average(self):
+        avg = (
+            self.accuracy
+            + self.communication
+            + self.cleanliness
+            + self.location
+            + self.check_in
+            + self.value
+        ) / 6
+        return avg

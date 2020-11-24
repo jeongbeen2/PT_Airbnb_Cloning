@@ -25,7 +25,7 @@ class Review(core_models.TimeStampedModel):
         """ ex) self.room.city """
         """ ex2) self.room.host.username """
         """ 만일, 부르려는 값의 __str__값이 정의되어있으면 그값을 가져온다. """
-        return f"{self.user} says : {self.review}"
+        return f"{self.room} => {self.user} says : {self.review}"
 
     def rating_average(self):
         avg = (
@@ -36,4 +36,7 @@ class Review(core_models.TimeStampedModel):
             + self.check_in
             + self.value
         ) / 6
-        return avg
+        return round(avg, 2)
+
+    """ 항목의 이름을 바꿔주고싶다면 이렇게하면 된다. """
+    # rating_average.short_description = "oh my zsh"

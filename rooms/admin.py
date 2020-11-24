@@ -80,6 +80,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "count_amenities",
         "count_photos",
+        "total_rating",
     )
     """ #6.2 => ordering으로, 내가 지정해서 정렬해줄수도 있다. """
     ordering = (

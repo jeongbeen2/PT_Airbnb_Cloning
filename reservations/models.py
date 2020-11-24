@@ -1,4 +1,6 @@
+from datetime import time
 from django.db import models
+from django.utils import timezone
 from core import models as core_models
 
 
@@ -28,3 +30,19 @@ class Reservation(core_models.TimeStampedModel):
 
     def __str__(self):
         return f"{self.room} = {self.check_in}"
+
+    def in_progress(self):
+        now = timezone.now().date()
+        return now >= self.check_in and now <= self.check_out
+
+    """ #8.1 >> timezone에서 불러온 now, self.check_in은 둘다 <class "datetime.date"> 이다. """
+    """ 둘을 비교하게되면 불리안값으로 나오게 됨. """
+
+    in_progress.boolean = True
+    """ 불리안값을 X , V 등의 시각화를 시켜준다. """
+
+    def is_finished(self):
+        now = timezone.now().date()
+        return now > self.check_out
+
+    is_finished.boolean = True

@@ -51,7 +51,10 @@ class Photo(core_models.TimeStampedModel):
     """ Photo Moedl Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+
+    """ ImageField는 upload_to를 통하여, 어느 폴더에 저장될 것인지를 지정할 수 있다. """
+    file = models.ImageField(upload_to="room_photos")
+
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
     """ ForeignKey를 해줄 때, 첫번째 파라미터는 class를 가져와야 한다. ex. Room.. """
     """ 이때, Photo는 Room을 가져와야 하는데, 파이썬은 수직으로 파일을 읽기 때문에 room보다 아래에 있어야한다. """

@@ -135,3 +135,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
+
+
+""" #8.3 >> os.path는 저장된 곳의 절대 경로를 표시하고, 아래와 같이 표기할 경우 """
+""" os.path.join(BASE_DIR, "THIS") THIS라는 폴더가 생성되면서 MEDIA 파일들이 업로드된다. (uploads 폴더설정.) """
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")

@@ -20,9 +20,20 @@ class ItemAdmin(admin.ModelAdmin):
     pass
 
 
+""" #8.6>> Photo admin을, room의 admin 안에다가 넣는 방법 ==> Inline """
+""" TabularInline / StackedInline으로, 보이는 것이 달라진다. """
+
+
+class PhotoInline(admin.TabularInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     """ Room Admin Definition """
+
+    inlines = (PhotoInline,)
 
     fieldsets = (
         (
@@ -100,6 +111,11 @@ class RoomAdmin(admin.ModelAdmin):
         "house_rules",
         "city",
     )
+
+    raw_id_fields = ("host",)
+    """ #8.6>> raw_id는, 리스트의 수가 많아질 경우 사용한다. """
+    """ 각 리스트에 id를 매겨서 검색할 수 있게 함. """
+
     """ #6.0 => Admin Panel에 search 기능을 추가하고 싶다면, 아래와 같이하자. """
     """ ^city, =city, @city ... """
     search_fields = ("city", "host__gender", "^host__username")

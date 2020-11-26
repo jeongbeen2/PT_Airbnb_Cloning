@@ -1,12 +1,23 @@
+from rooms.models import Room
 from django.contrib import admin
 from django.contrib.admin.decorators import register
 from django.contrib.auth.admin import UserAdmin
 from . import models
+from rooms import models as room_models
+
+""" #8.6 >> rooms의 모델을 받아와서, user 안에 Inline을 만들어줬다. """
+
+
+class RoomInline(admin.TabularInline):
+
+    model = room_models.Room
 
 
 @admin.register(models.User)  # Decorator
 class CustomUserAdmin(UserAdmin):
     """ Custom User Admin """
+
+    inlines = (RoomInline,)
 
     fieldsets = UserAdmin.fieldsets + (
         (

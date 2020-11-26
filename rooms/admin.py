@@ -1,5 +1,6 @@
 from rooms.models import Amenity, Facility, HouseRule
 from django.contrib import admin
+from django.utils.html import mark_safe
 from . import models
 
 
@@ -128,4 +129,20 @@ class RoomAdmin(admin.ModelAdmin):
 class PhotoADmin(admin.ModelAdmin):
     """ Photo Admin Definition """
 
-    pass
+    list_display = (
+        "__str__",
+        "get_thumbnail",
+    )
+    """ #8.5 >> 썸네일은 admin에서만 보여질 것이기 때문에, admin에 만든다. """
+
+    """ obj.file.url, obj.file.path 처럼, obj 안에는 수많은 정보가 있다. """
+
+    def get_thumbnail(self, obj):
+        return mark_safe(f'<img width="50px" src="{obj.file.url}" />')
+
+    get_thumbnail.short_description = "Thumbnail"
+
+    """ #8.5 정리>> photo 어드민패널 작업. """
+    """ dir, var을 이용하여 obj의 클래스내용을 다 볼수있고, 파일이 가진 것을 볼 수 있다. """
+    """ 그리고 f'<img width="50px" src="{obj.file.url}" />' 처럼, html 내부를 보려했지만 """
+    """ 장고는 그것을 보안상 막아버린다. 그래서 mark_safe를 이용하여 장고한테 ㄱㅊ하다고 말해준다. """

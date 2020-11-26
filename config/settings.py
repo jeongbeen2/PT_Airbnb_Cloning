@@ -140,3 +140,8 @@ AUTH_USER_MODEL = "users.User"
 """ #8.3 >> os.path는 저장된 곳의 절대 경로를 표시하고, 아래와 같이 표기할 경우 """
 """ os.path.join(BASE_DIR, "THIS") THIS라는 폴더가 생성되면서 MEDIA 파일들이 업로드된다. (uploads 폴더설정.) """
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+""" #8.4>> 경로 앞에가 /로 시작하면, 현재 URL 끝에다 추가하는 것이아닌 URL이 처음부터 시작된다. """
+""" ex) media/ -> 127.0.0.1:8000/admin/rooms/photo/1/change/media/room_photos... """
+""" ex) /media/ -> 127.0.0.1:8000/media/room_photos... """
+MEDIA_URL = "/media/"

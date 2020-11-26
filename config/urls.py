@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+
+""" django에서 settings을 import할때는 위와같이 해줘야 한다. """
+from django.conf.urls.static import static
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
+
+
+""" #8.4 >> settings.DEBUG == true일때만! """
+""" 실제 서버가 돌아갈때는 False로, 이때는 절때 사용하지 마라. 서버가 돌아갈때마다 사진이 저장되면 """
+""" 서버 줫터질꺼임 ㅎㅎ """
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

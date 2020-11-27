@@ -15,3 +15,6 @@ class Command(BaseCommand):
         times = options.get("times")
         for t in range(0, int(times)):
             self.stdout.write(self.style.WARNING("heelloo~"))
+
+
+# python manage.py loveyou --times 50

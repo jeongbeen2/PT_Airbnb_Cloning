@@ -53,6 +53,7 @@ class RoomAdmin(admin.ModelAdmin):
                     "name",
                     "description",
                     "country",
+                    "city",
                     "address",
                     "price",
                 ),
@@ -128,6 +129,10 @@ class RoomAdmin(admin.ModelAdmin):
         "facilities",
         "house_rules",
     )
+    """ save_model은, 누군가가 저장을 할때 정보를 알 수 있게 해주는 모델이고, 여러 admin을 관리할 때 유용하다. """
+    # def save_model(self, request, obj, form, change):
+    #     print(obj, change, form)
+    #     super().save_model(request, obj, form, change)
 
     """ #6.2 => many to many를 list에 넣어주기 위해서는, 그냥 list에 amenities만 넣어주면 오류발생. """
     """ def __str__ 처럼, def count_amenities라는 함수를 새로 만들어서 지정해 줘야 한다. """

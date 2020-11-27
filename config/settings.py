@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 THIRD_PARTY_APPS = [
     "django_countries",
+    "django_seed",
 ]
 
 DJANGO_APPS = [

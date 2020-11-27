@@ -104,7 +104,7 @@ class Room(core_models.TimeStampedModel):
     """ #8.8 >> save를 interception해서 우리가 원하는대로 바꿔주고, ex) self.city = 'potato'하면 저장해도 potato로 바뀜 """
     """ 그다음 super().save(*args, **kwargs)를 해주면 원상태로 잘 저장된다. """
 
-    """ 저장할때 앞에 대문자를 주고싶어서 시작했고, 이를 저장할때 intercept를 통해서 대문자로 바꿔주고, 다시 원래 부모클래스를 불러와서 저장함. """
+    """ 저장할때 앞에 대문자를 주고싶어서 시작했고, 이를 저장할때 intercept를 통해서 대문자로 바꿔주고, 다시 원래 부모 클래스를 불러와서 저장함. """
 
     def save(self, *args, **kwargs):
         self.city = str.capitalize(self.city)

@@ -145,6 +145,8 @@ class RoomAdmin(admin.ModelAdmin):
         return obj.photos.count()
         """ photos는 models.py > class photo > room > related_name = "photos" 연결. """
 
+    count_photos.short_description = "Photo Count"
+
 
 @admin.register(models.Photo)
 class PhotoADmin(admin.ModelAdmin):

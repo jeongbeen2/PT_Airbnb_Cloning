@@ -1,5 +1,7 @@
 import random
+from random import seed
 from django.core.management.base import BaseCommand
+from django.contrib.admin.utils import flatten
 from django_seed import Seed
 from rooms import models as room_models
 from users import models as user_models
@@ -15,6 +17,7 @@ class Command(BaseCommand):
         )
 
     """ #9.3 >> 방을 만들기위해서는, host와 room_type이 필수라고 지정해줬으므로, 아래와같이 add_entity로 직접 지정해줘야한다. """
+    """ faker는 django_seed에서 좋은 기능 중 하나임. """
 
     def handle(self, *args, **options):
         number = options.get("number")
@@ -35,5 +38,14 @@ class Command(BaseCommand):
                 "baths": lambda x: random.randint(0, 5),
             },
         )
-        seeder.execute()
+        created_photos = seeder.execute()
+        created_clean = flatten(list(created_photos.values()))
+        for pk in created_clean:
+            room = room_models.Room.objects.get(pk=pk)
+            for i in range(3, random.randint(10, 17)):
+                room_models.Photo.objects.create(
+                    caption=seeder.faker.sentence(),
+                    room=room,
+                    file=f"/room_photos/{random.randint(1,31)}.webp",
+                )
         self.stdout.write(self.style.SUCCESS(f"{number} rooms created!"))

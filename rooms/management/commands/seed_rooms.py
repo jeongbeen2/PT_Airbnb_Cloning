@@ -32,7 +32,7 @@ class Command(BaseCommand):
                 "host": lambda x: random.choice(all_users),
                 "guests": lambda x: random.randint(0, 4),
                 "room_type": lambda x: random.choice(room_types),
-                "price": lambda x: random.randint(0, 300),
+                "price": lambda x: random.randint(50, 300),
                 "beds": lambda x: random.randint(0, 5),
                 "bedrooms": lambda x: random.randint(0, 5),
                 "baths": lambda x: random.randint(0, 5),

@@ -1,0 +1,26 @@
+<!-- #10.2 >> templates 폴더를 알리기 위해선, settings로 가서 "DIRS로 간다." -->
+<!-- Djaneiro - Django Snippets 깔면, 자동으로 장고 템플릿을 사용가능.-->
+
+<!-- 매번 html 골격을 만들어주지 않고, base를 사용해서 father class처럼 사용가능. -->
+<!-- block은, 자식 template에서 부모 template로 넣을수 있는 창문같은 것이다. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+    {% block page_name %}{% endblock page_name %} | Nbnb</title>
+</head>
+<body>
+
+    {% include "partials/header.html" %}
+    
+    {% block one %}
+    
+    {% endblock one %}
+    
+    {% include "partials/footer.html" %}
+
+
+</body>
+</html>

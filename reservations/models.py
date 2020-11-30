@@ -2,6 +2,7 @@ from datetime import time
 from django.db import models
 from django.utils import timezone
 from core import models as core_models
+from . import models as reservation_models
 
 
 class Reservation(core_models.TimeStampedModel):
@@ -32,8 +33,11 @@ class Reservation(core_models.TimeStampedModel):
         return f"{self.room} = {self.check_in}"
 
     def in_progress(self):
-        now = timezone.now().date()
-        return now >= self.check_in and now <= self.check_out
+        if self.status == "confirmed":
+            now = timezone.now().date()
+            return now >= self.check_in and now <= self.check_out
+        else:
+            return False
 
     """ #8.1 >> timezone에서 불러온 now, self.check_in은 둘다 <class "datetime.date"> 이다. """
     """ 둘을 비교하게되면 불리안값으로 나오게 됨. """

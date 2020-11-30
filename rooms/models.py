@@ -72,12 +72,12 @@ class Room(core_models.TimeStampedModel):
     description = models.TextField()
     country = CountryField()
     city = models.CharField(max_length=80)
-    price = models.IntegerField()
+    price = models.PositiveIntegerField()
     address = models.CharField(max_length=140, blank=True)
-    guests = models.IntegerField()
-    beds = models.IntegerField()
-    bedrooms = models.IntegerField()
-    baths = models.IntegerField()
+    guests = models.PositiveIntegerField()
+    beds = models.PositiveIntegerField()
+    bedrooms = models.PositiveIntegerField()
+    baths = models.PositiveIntegerField()
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
@@ -110,9 +110,13 @@ class Room(core_models.TimeStampedModel):
         self.city = str.capitalize(self.city)
         super().save(*args, **kwargs)
 
+    """ #9.3>> division by zero errer -> 방을 만들었을 때, 방 리뷰가 0점인 것을 방지하려고 if문을 붙임. """
+
     def total_rating(self):
         all_reviews = self.reviews.all()
         all_ratings = 0
-        for review in all_reviews:
-            all_ratings += review.rating_average()
-        return all_ratings / len(all_reviews)
+        if len(all_reviews) > 0:
+            for review in all_reviews:
+                all_ratings += review.rating_average()
+            return all_ratings / len(all_reviews)
+        return 0

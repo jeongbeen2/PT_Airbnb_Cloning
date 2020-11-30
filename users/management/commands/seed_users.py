@@ -17,7 +17,9 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        number = options.get("number")
+        number = options.get(
+            "number"
+        )  # options의 숫자를 number로 넣어준다. ex) python 어쩌고,, --numbers 50
         seeder = Seed.seeder()
         seeder.add_entity(
             User,

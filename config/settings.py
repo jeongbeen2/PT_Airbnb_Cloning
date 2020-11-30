@@ -67,10 +67,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
+""" os.path.join(BASE_DIR, "templates")를 DIR에 줌으로써, 장고에게 템플릿이 어딨는지를 알려준다. """
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

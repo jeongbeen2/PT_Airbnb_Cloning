@@ -11,4 +11,22 @@
 <h1>{{room.name}} / ${{room.price}}</h1>
 {% endfor %}
 
+<!-- #11.3 >> Django에서 너무많은 logic을 사용하진 못한다. 그러므로, |add:"1" 과 같은 tag를 사용할 수 있다. -->
+<!-- https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#built-in-filter-reference -->
+    <h5>
+    
+    {% if page is not 1 %}
+    <a href="?page={{page|add:"-1"}}">Previous</a>
+    {% endif %}
+    
+    Page {{page}} of {{page_count}}
+    
+    {% if not page == page_count %}
+        
+    <a href="?page={{page|add:"1"}}">Next</a>
+    {% endif %}
+        
+    </h5>
+        
+
 {% endblock one %}

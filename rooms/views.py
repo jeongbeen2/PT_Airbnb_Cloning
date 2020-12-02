@@ -1,6 +1,6 @@
 from math import ceil
-from django.shortcuts import render
-from django.core.paginator import Paginator
+from django.shortcuts import redirect, render
+from django.core.paginator import EmptyPage, Paginator
 from . import models
 
 
@@ -15,10 +15,17 @@ from . import models
 def all_rooms(request):
     page = request.GET.get("page", 1)
     room_list = models.Room.objects.all()
-    paginator = Paginator(room_list, 10)
-    rooms = paginator.get_page(page)
-    return render(request, "rooms/home.html", {"rooms": rooms})
+    paginator = Paginator(
+        room_list, 10, orphans=5
+    )  # orphans -> 끝에 남는애들을 앞페이지에 모조리 보여준다.
+    try:
+        rooms = paginator.page(int(page))
+        return render(request, "rooms/home.html", {"page": rooms})
+    except EmptyPage:
+        return redirect("/")
 
+
+""" #11.6 >> Python에서, 에러를 다루는 법은 try & except를 사용해라. 모든경우의 예외는 except Exception 으로 처리. """
 
 """ #10.3 >> all_rooms.html => home.html 수정. """
 

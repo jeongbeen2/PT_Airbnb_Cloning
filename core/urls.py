@@ -8,6 +8,8 @@ from rooms import views as room_views
 app_name = "core"
 
 urlpatterns = [
-    path("", room_views.all_rooms, name="home"),
+    path("", room_views.HomeView.as_view(), name="home"),
 ]
+"""#11.7 >> django -> class based view는 view로 변신시켜주는 메소드가 있다. """
+
 """ #10.3 >> all_rooms는 views.py 안에있는 def 이름과 같아야한다. """

@@ -1,5 +1,6 @@
 from math import ceil
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from . import models
 
 
@@ -13,26 +14,10 @@ from . import models
 
 def all_rooms(request):
     page = request.GET.get("page", 1)
-    page = int(page or 1)
-    page_size = 10
-    limit = page_size * page
-    offset = limit - page_size
-
-    page_count = ceil(
-        models.Room.objects.count() / page_size
-    )  # 이 경우, Room.object의 모든 갯수를 count 해주는 메소드이다.
-
-    all_rooms = models.Room.objects.all()[offset:limit]
-    return render(
-        request,
-        "rooms/home.html",
-        context={
-            "rooms": all_rooms,
-            "page": page,
-            "page_count": page_count,
-            "page_range": range(1, page_count),
-        },
-    )
+    room_list = models.Room.objects.all()
+    paginator = Paginator(room_list, 10)
+    rooms = paginator.get_page(page)
+    return render(request, "rooms/home.html", {"rooms": rooms})
 
 
 """ #10.3 >> all_rooms.html => home.html 수정. """
@@ -42,3 +27,5 @@ def all_rooms(request):
 """ def name(ex.all_rooms)은 core > urls.py안에 있는 이름과 같아야함. """
 
 """ context의 str부분, (ex. "rooms")는 template 안에서 부를때의 이름이다. """
+
+""" #11.4 >> dir(rooms.paginator) 안에 page, count 등등 여러메소드가 존재.  """

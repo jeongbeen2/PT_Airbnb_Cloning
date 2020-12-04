@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_countries.fields import CountryField
 from core import models as core_models
 
@@ -111,6 +112,11 @@ class Room(core_models.TimeStampedModel):
         super().save(*args, **kwargs)
 
     """ #9.3>> division by zero errer -> 방을 만들었을 때, 방 리뷰가 0점인 것을 방지하려고 if문을 붙임. """
+
+    def get_absolute_url(self):
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
+
+    """ #12.1 >> 이를 사용하면, admin 패널 안에서 VIEW ON SITE라는 버튼이 생기고, 위 return값으로 들어가진다. """
 
     def total_rating(self):
         all_reviews = self.reviews.all()

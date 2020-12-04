@@ -1,10 +1,9 @@
 # from django.shortcuts import redirect, render
 # from django.core.paginator import EmptyPage, Paginator
-from django.utils import timezone
 from django.views.generic import ListView
+from django.http import Http404
 from . import models
-from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.shortcuts import render
 
 
 """ #10.1 >> request는, view 함수의 첫번째 인자다. """
@@ -38,7 +37,11 @@ def room_detail(request, pk):
         room = models.Room.objects.get(pk=pk)
         return render(request, "rooms/detail.html", {"room": room})
     except models.Room.DoesNotExist:
-        return redirect(reverse("core:home"))
+        raise Http404()
+        """ raise Http404를 하게되면, 따로 reverse, render를 하지 않아도 ㄱㅊ """
+        """ #12.3 >> 에러는 return(x) raise(o) """
+        """ 이때, Django는 자동적으로 templates/404.html을 render하게된다. (404.html은 base.html 옆에 있어야함.) """
+        """ DEBUG = False , ALLOWED_HOSTS = "*" 라고 하면, 404Page를 컨트롤할수 있음. """
 
     """ #11.8 >> get_context_data로, CBV를 커스텀할수 있다. """
     # def get_context_data(self, **kwargs):

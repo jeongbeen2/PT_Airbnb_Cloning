@@ -27,6 +27,7 @@ from django.conf.urls.static import static
 """ urlpatterns은, urls.py에서 무조건 필수다. """
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
+    path("rooms/", include("rooms.urls", namespace="rooms")),
     path("admin/", admin.site.urls),
 ]
 

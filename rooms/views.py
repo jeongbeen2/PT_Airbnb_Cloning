@@ -3,6 +3,7 @@
 from django.utils import timezone
 from django.views.generic import ListView
 from . import models
+from django.shortcuts import render
 
 
 """ #10.1 >> request는, view 함수의 첫번째 인자다. """
@@ -26,6 +27,13 @@ class HomeView(ListView):
     """ #11.7 >> ccbv를 통해, ListView의 모든것을 볼 수 있음. """
     """ https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-display/ """
     context_object_name = "rooms"  # #11.8 >> object_list -> 이름을 바꿀수 있다.
+
+
+""" #12.0 >> pk라는 인자는, rooms/@ -> @안의 숫자를 가져온다. """
+
+
+def room_detail(request, pk):
+    return render(request, "rooms/detail.html")
 
     """ #11.8 >> get_context_data로, CBV를 커스텀할수 있다. """
     # def get_context_data(self, **kwargs):

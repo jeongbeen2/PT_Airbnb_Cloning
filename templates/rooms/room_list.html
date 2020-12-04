@@ -5,7 +5,7 @@
     JB's First Django Templates
 {% endblock page_name %}
     
-{% block one %}
+{% block content %}
 {% for room in rooms %}
 <!-- #12.0 >> 방을 만들때 그 방의 primary key로 가는 링크를 만들고자 한다. -->
 <!-- 원래대로라면, /rooms/{{room.pk}}와 같이 url을 다 기억해야하지만, Django는 새로운 url방식을 제시한다. -->
@@ -37,4 +37,4 @@
     </h5>
         
 
-{% endblock one %}
+{% endblock content %}

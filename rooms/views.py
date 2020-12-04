@@ -3,7 +3,8 @@
 from django.utils import timezone
 from django.views.generic import ListView
 from . import models
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 
 """ #10.1 >> request는, view 함수의 첫번째 인자다. """
@@ -33,7 +34,11 @@ class HomeView(ListView):
 
 
 def room_detail(request, pk):
-    return render(request, "rooms/detail.html")
+    try:
+        room = models.Room.objects.get(pk=pk)
+        return render(request, "rooms/detail.html", {"room": room})
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))
 
     """ #11.8 >> get_context_data로, CBV를 커스텀할수 있다. """
     # def get_context_data(self, **kwargs):

@@ -7,6 +7,45 @@
 
 
 {% block content %}
-    
+<div>
+    <h1>name : {{room.name}}</h1>
+    <h3>description : {{room.description}}</h3>
+    <h3>country : {{room.country}}</h3>
+    <h3>city : {{room.city}}</h3>
+    <h3>price : {{room.price}}</h3>
+    <h3>address : {{room.address}}</h3>
+    <h3>guests : {{room.guests}}</h3>
+    <h3>beds : {{room.beds}}</h3>
+    <h3>bedrooms : {{room.bedrooms}}</h3>
+    <h3>baths : {{room.baths}}</h3>
+    <h3>check_in : {{room.check_in}}</h3>
+    <h3>check_out : {{room.check_out}}</h3>
+</div>
+<div>
+    <h2>By: {{room.host.username}} 
+        {% if room.host.superhost %}
+            (superhost)
+        {% endif %}
+    </h2>
+    <h2>Room Type : {{room.room_type}}</h2>
+    <h3>Amenities</h3>
+    <ul>
+    {% for a in room.amenities.all %}
+        <li>{{a}}</li>
+    {% endfor %}
+    </ul>
+    <h3>Facilities</h3>
+    <ul>
+    {% for f in room.facilities.all %}
+        <li>{{f}}</li>
+    {% endfor %}
+    </ul>
+    <h3>House Rules</h3>
+    <ul>
+    {% for r in room.house_rules.all %}
+        <li>{{r}}</li>
+    {% endfor %}
+    </ul>
+</div>
 {% endblock content %}
     

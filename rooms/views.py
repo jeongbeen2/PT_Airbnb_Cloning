@@ -1,4 +1,5 @@
-# from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render
+
 # from django.core.paginator import EmptyPage, Paginator
 # from django.http import Http404
 from django.views.generic import ListView, DetailView
@@ -36,6 +37,12 @@ class RoomDetail(DetailView):
     """ RoomDetail Definition """
 
     model = models.Room
+
+
+def search(request):
+    city = request.GET.get("city")
+    city = str.capitalize(city)
+    return render(request, "rooms/search.html", {"city": city})
 
 
 """ #12.4 >> RoomDetail을 만들면, model이라는 QuerySet을 가져오고 Django에서 정해준 이름인 detail.html -> room_detail.html로 수정해야함. """

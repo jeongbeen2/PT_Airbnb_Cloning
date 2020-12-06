@@ -49,7 +49,7 @@ class HouseRule(AbstractItem):
 
 
 class Photo(core_models.TimeStampedModel):
-    """ Photo Moedl Definition """
+    """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
 

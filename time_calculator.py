@@ -3,9 +3,12 @@ total_min = 0
 total_sec = 0
 
 while True:
-    n = input("시간을 입력하세요 (ex. 10:10 => 1010) \n : ")
-    total_min += int(n[:2])
-    total_sec += int(n[2:])
+
+    time = input("시간을 입력하세요. \n : ")
+    total_min += int(time[:2])
+    print(total_min)
+    total_sec += int(time[2:])
+    print(total_sec)
 
     if total_sec >= 60:
         total_sec -= 60

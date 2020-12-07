@@ -35,4 +35,4 @@ while True:
 
             print(f"총 플레이 타임은 {total_hour}:{get_min}:{get_sec} 입니다.")
         else:
-            print("시간값 오류")
+            print("시간값 오류, 다시 입력하세요")

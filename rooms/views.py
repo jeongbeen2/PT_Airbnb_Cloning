@@ -54,7 +54,6 @@ def search(request):
     """ #13.4 >> 단독이 아닌, many to many의 물건을 가져올 때는 getlist 사용. """
     s_amenities = request.GET.getlist("amenities")
     s_facilities = request.GET.getlist("facilities")
-    print(instant, super_host)
     form = {
         "city": city,
         "s_country": country,
@@ -80,11 +79,19 @@ def search(request):
         "amenities": amenities,
         "facilities": facilities,
     }
-    return render(
-        request,
-        "rooms/search.html",
-        {**form, **choices},
-    )
+    filter_args = {}
+
+    if city != "Anywhere":
+        filter_args["city__startswith"] = city
+
+    filter_args["country"] = country
+
+    if room_type != 0:
+        filter_args["room_type__pk"] = room_type
+        """ #13.5 >> room_type은 Foreign Key이다. """
+    rooms = models.Room.objects.filter(**filter_args)
+
+    return render(request, "rooms/search.html", {**form, **choices, "rooms": rooms})
 
 
 """ #12.4 >> RoomDetail을 만들면, model이라는 QuerySet을 가져오고 Django에서 정해준 이름인 detail.html -> room_detail.html로 수정해야함. """

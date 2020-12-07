@@ -49,8 +49,8 @@ def search(request):
     bedrooms = int(request.GET.get("bedrooms", 0))
     beds = int(request.GET.get("beds", 0))
     baths = int(request.GET.get("baths", 0))
-    instant = request.GET.get("instant", False)
-    super_host = request.GET.get("super_host", False)
+    instant = bool(request.GET.get("instant", False))
+    superhost = bool(request.GET.get("superhost", False))
     """ #13.4 >> 단독이 아닌, many to many의 물건을 가져올 때는 getlist 사용. """
     s_amenities = request.GET.getlist("amenities")
     s_facilities = request.GET.getlist("facilities")
@@ -66,7 +66,7 @@ def search(request):
         "s_amenities": s_amenities,
         "s_facilities": s_facilities,
         "instant": instant,
-        "super_host": super_host,
+        "superhost": superhost,
     }
 
     room_types = models.RoomType.objects.all()
@@ -89,6 +89,40 @@ def search(request):
     if room_type != 0:
         filter_args["room_type__pk"] = room_type
         """ #13.5 >> room_type은 Foreign Key이다. """
+    """ #13.6 >> lte -> less then or equal, gte -> greater"""
+    if price != 0:
+        filter_args["price__lte"] = price
+
+    if guests != 0:
+        filter_args["guests__gte"] = guests
+
+    if bedrooms != 0:
+        filter_args["bedrooms__gte"] = bedrooms
+
+    if beds != 0:
+        filter_args["beds__gte"] = beds
+
+    if baths != 0:
+        filter_args["baths__gte"] = baths
+
+    """ #13.6 >> 원래는, if instant: 라고만해도 된다. >> 중복되기때문. """
+    if instant is True:
+        filter_args["instant_book"] = True
+
+    if superhost is True:
+        filter_args["host__superhost"] = True
+
+    """ #13.6 >> 일단, s_amenities안으로 들어오는 것들은 amenities들의 pk이다. 이들이 한개라도 있는지 확인하려고 >0 을 해주고 """
+    """ for문으로, ['5','6','7'] 이렇게 저장된 pk들을 각각 가져온 다음에 filter_args 안에다가 넣어준다. """
+    """ filter_args는, ["조건"] 리스트 안에있는 조건과 똑같다면 출력해주라는 이야기인듯. """
+    if len(s_amenities) > 0:
+        for s_amenity in s_amenities:
+            filter_args["amenities__pk"] = int(s_amenity)
+
+    if len(s_facilities) > 0:
+        for s_facility in s_facilities:
+            filter_args["facilities__pk"] = int(s_facility)
+
     rooms = models.Room.objects.filter(**filter_args)
 
     return render(request, "rooms/search.html", {**form, **choices, "rooms": rooms})

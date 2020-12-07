@@ -43,6 +43,7 @@ class RoomAdmin(admin.ModelAdmin):
                     "beds",
                     "bedrooms",
                     "baths",
+                    "guests",
                 )
             },
         ),

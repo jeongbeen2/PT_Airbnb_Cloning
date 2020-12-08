@@ -16,9 +16,6 @@ class Command(BaseCommand):
             "--number", default=2, type=int, help="How many rooms you want to create"
         )
 
-    """ #9.3 >> 방을 만들기위해서는, host와 room_type이 필수라고 지정해줬으므로, 아래와같이 add_entity로 직접 지정해줘야한다. """
-    """ faker는 django_seed에서 좋은 기능 중 하나임. """
-
     def handle(self, *args, **options):
         number = options.get("number")
         seeder = Seed.seeder()
@@ -38,8 +35,6 @@ class Command(BaseCommand):
                 "baths": lambda x: random.randint(0, 5),
             },
         )
-        """ #9.4 >> flatten은, [[13]] 과 같은 형식을 [13]으로 바꿔준다. """
-        """ 만들어진 방의 넘버를 primary key, pk로 지정하고, 그 방안에 3~17개의 사진을 넣어주는 과정임. """
         created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))
         amenities = room_models.Amenity.objects.all()
@@ -53,8 +48,6 @@ class Command(BaseCommand):
                     room=room,
                     file=f"/room_photos/{random.randint(1,31)}.webp",
                 )
-            """ #9.5 >> Many To Many Field에서 새로운 것을 추가할 때, 0~15의 숫자를 뽑아 그중 2로 나누어진다면 추가하는 방법. """
-            """ 많이 쓰는 방식이다. """
             for a in amenities:
                 magic_number = random.randint(0, 15)
                 if magic_number % 2 == 0:

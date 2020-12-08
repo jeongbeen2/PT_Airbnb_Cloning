@@ -1,9 +1,6 @@
 from rooms.models import Amenity
 from django.core.management.base import BaseCommand
 
-# from rooms import models as room_models
-# from rooms.models import Amenity -> 여기서 Amenity만 사용하는게 확실하면 이렇게 해도 되긴함.
-
 
 class Command(BaseCommand):
 

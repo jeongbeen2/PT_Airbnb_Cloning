@@ -7,10 +7,6 @@
     
 {% block content %}
 {% for room in rooms %}
-<!-- #12.0 >> 방을 만들때 그 방의 primary key로 가는 링크를 만들고자 한다. -->
-<!-- 원래대로라면, /rooms/{{room.pk}}와 같이 url을 다 기억해야하지만, Django는 새로운 url방식을 제시한다. -->
-<!-- urls.py에서 app_name, name, config,urls.py에서 namespace에 적은 이름들을 기억해보자. -->
-<!-- url 'namespace:path(rooms/urls.py 안에있는 name)' arguments(클릭했을때 가고싶은 url 인자.=> integer)  -->
 <h4>
     <a href="{%url 'rooms:detail' room.pk %}">
         {{room.name}} / ${{room.price}}
@@ -18,8 +14,6 @@
 </h4>
 {% endfor %}
 
-<!-- #11.3 >> Django에서 너무많은 logic을 사용하진 못한다. 그러므로, |add:"1" 과 같은 tag를 사용할 수 있다. -->
-<!-- https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#built-in-filter-reference -->
     <h5>
     
     {% if page_obj.has_previous %}
@@ -28,7 +22,6 @@
     
     Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
     
-    <!-- #11.5 >> exception -->
     {% if page_obj.has_next %}
     <a href="?page={{page_obj.next_page_number}}">Next</a>
     {% endif %}

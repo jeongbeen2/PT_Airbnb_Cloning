@@ -155,3 +155,9 @@ dmypy.json
 uploads/
 
 *.zip
+
+z_example_command_like_this/
+
+django_terminal.txt
+
+time_calculator.py

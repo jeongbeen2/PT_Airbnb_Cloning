@@ -88,20 +88,13 @@ class SearchView(View):
                     filter_args["facilities"] = facility
 
                 qs = models.Room.objects.filter(**filter_args).order_by("-created")
-
                 paginator = Paginator(qs, 10, orphans=5)
-
                 page = request.GET.get("page", 1)
-
                 rooms = paginator.get_page(page)
                 return render(
                     request, "rooms/search.html", {"form": form, "rooms": rooms}
                 )
         else:
-            """ #13.10 >> url에 문제가 있다면, else로 넘어와서 빈 페이지의 form을 render한다. """
-            """ 문제가 없다면, form.is_valid에 있는 filter 기능을 잘 사용한다. """
-            """ url을 제멋대로 바꾸면, 장고가 알아서 해결해줌. """
-            """ ex, room_type의 pk는 4까지지만, 123431531 이렇게 치면 에러메세지를 대신 띄워준다. """
 
             form = forms.SearchForm()
         return render(request, "rooms/search.html", {"form": form})

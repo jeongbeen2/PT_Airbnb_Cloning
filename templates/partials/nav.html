@@ -1,8 +1,15 @@
 
 
 <a href="{%url 'core:home' %}">Nbnb</a>
+
 <ul>
-    <li>
-        <a href="{%url 'users:login' %}">Login</a>
-    </li>
+    {% if user.is_authenticated %}
+        <li><a href="{%url 'users:logout' %}">Log out</a></li>
+    {% else %}
+        <li><a href="{%url 'users:login' %}">Login</a></li>
+    {% endif %}
+        
 </ul>
+
+<!-- #14.4 >> nav.html에는 users를 어떻게 가져올까? -->
+<!-- Bulit-in template context processors 떄문이다. -->

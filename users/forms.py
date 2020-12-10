@@ -26,3 +26,7 @@ class LoginForm(forms.Form):
 
     """ #14.3 >> def clean으로 할거면, 에러가 뜨는곳을 직접 add_error 해줘서 넣어주어야 하고, """
     """ def clean_email, password처럼 각각 해줄꺼면 raise password, email 해주면 그자리에 뜬다. """
+
+
+class SignUpForm(forms.Form):
+    pass

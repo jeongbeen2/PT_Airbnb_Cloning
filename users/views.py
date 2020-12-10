@@ -11,8 +11,12 @@ class LoginView(FormView):
     template_name = "users/login.html"
     form_class = forms.LoginForm
     success_url = reverse_lazy("core:home")
+    """ #14.5 >> reverse_lazy --> url을 필요로할때만 따로 불러오는 기능. """
+    """ 즉, lazy -> 바로 실행하지 않는다. """
+    initial = {"email": "admin@admin.admin"}
 
     def form_valid(self, form):
+        """ form이 유효한지 체크하는 메소드. """
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=email, password=password)

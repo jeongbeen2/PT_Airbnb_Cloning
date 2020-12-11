@@ -36,7 +36,16 @@ class SignUpView(FormView):
     success_url = reverse_lazy("core:home")
 
     initial = {
-        "first_name": "Nicolas",
-        "last_name": "Serr",
-        "email": "itn@las.com",
+        "first_name": "jeong",
+        "last_name": "been",
+        "email": "jeong@been.com",
     }
+
+    def form_valid(self, form):
+        form.save()
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=email, password=password)
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)

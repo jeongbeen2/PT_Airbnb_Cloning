@@ -64,6 +64,7 @@ class SignUpForm(forms.Form):
         user.first_name = first_name
         user.last_name = last_name
         user.save()
+
         """ 장고에 원래 들어있던, user.first_name, lastname을 저장하고, user내에있는 save() 메소드를 실행시킨다. """
         """ user.is_staff = True도 가능함! """
         """ #15.1 >> (username, email, password) 저장. """

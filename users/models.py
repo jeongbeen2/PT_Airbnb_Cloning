@@ -33,8 +33,12 @@ class User(AbstractUser):
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     Bio = models.TextField(blank=True)
     birthdate = models.DateField(null=True)
-    language = models.CharField(choices=LANGUAGE_CHOICES, max_length=5, blank=True)
-    currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True)
+    language = models.CharField(
+        choices=LANGUAGE_CHOICES, max_length=5, blank=True, default=LANGUAGE_KOREAN
+    )
+    currency = models.CharField(
+        choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW
+    )
     superhost = models.BooleanField(default=False)
     """ #4.3 => __str__은 class에 기본적으로 있는 Method이다. 기본 출력값을 바꿔 줄 때 아래와 같이 사용한다. """
 

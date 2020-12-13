@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import fields
 from . import models
 
 """ #14.1 >> form을 작성하고, 그다음 views로 넘어가서 form을 넣어준다. """
@@ -28,22 +29,17 @@ class LoginForm(forms.Form):
     """ def clean_email, password처럼 각각 해줄꺼면 raise password, email 해주면 그자리에 뜬다. """
 
 
-class SignUpForm(forms.Form):
+class SignUpForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = (
+            "first_name",
+            "last_name",
+            "email",
+        )
 
-    first_name = forms.CharField(max_length=80)
-    last_name = forms.CharField(max_length=80)
-
-    email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
     password1 = forms.CharField(widget=forms.PasswordInput, label="Confirmed Password")
-
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        try:
-            models.User.objects.get(email=email)
-            raise forms.ValidationError("User already exists with that email")
-        except models.User.DoesNotExist:
-            return email
 
     def clean_password1(self):
         password = self.cleaned_data.get("password")
@@ -54,17 +50,12 @@ class SignUpForm(forms.Form):
         else:
             return password
 
-    def save(self):
-        first_name = self.cleaned_data.get("first_name")
-        last_name = self.cleaned_data.get("last_name")
+    """ #15.2 >> commit = False -> object를 생성하지만, db에는 올리지 말라는 뜻. """
+
+    def save(self, *args, **kwargs):
+        user = super().save(commit=False)
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
-
-        user = models.User.objects.create_user(email, email, password)
-        user.first_name = first_name
-        user.last_name = last_name
+        user.username = email
+        user.set_password(password)
         user.save()
-
-        """ 장고에 원래 들어있던, user.first_name, lastname을 저장하고, user내에있는 save() 메소드를 실행시킨다. """
-        """ user.is_staff = True도 가능함! """
-        """ #15.1 >> (username, email, password) 저장. """

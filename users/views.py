@@ -1,7 +1,6 @@
-from django.views import View
 from django.views.generic import FormView
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from . import forms
 
@@ -38,7 +37,7 @@ class SignUpView(FormView):
     initial = {
         "first_name": "jeong",
         "last_name": "been",
-        "email": "jeong@been.com",
+        "email": "aceman9508@gmail.com",
     }
 
     def form_valid(self, form):
@@ -48,7 +47,5 @@ class SignUpView(FormView):
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
             login(self.request, user)
-
-        """ #16.1 >> send email! """
         user.verify_email()
         return super().form_valid(form)

@@ -150,6 +150,8 @@ EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_POST = "587"
 EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
+EMAIL_FROM = "ohmyzsh_@sandbox28706253287e4dc2a4660b4a7b8eeac6.mailgun.org"
+""" Email_from의 @뒤의 도메인은, mailgun에서 준것이여야 스팸으로 처리가 되지않는다. """
 
 """ #16.1 >> git, github에 정보를 숨기기위해, django-dotenv 설치. """
 

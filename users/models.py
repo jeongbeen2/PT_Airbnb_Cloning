@@ -40,7 +40,9 @@ class User(AbstractUser):
         choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW
     )
     superhost = models.BooleanField(default=False)
-    """ #4.3 => __str__은 class에 기본적으로 있는 Method이다. 기본 출력값을 바꿔 줄 때 아래와 같이 사용한다. """
+    """ #16.1 >> email_confirmed 추가 """
+    email_confirmed = models.BooleanField(default=False)
+    email_secret = models.CharField(max_length=120, default="", blank=True)
 
-    def __str__(self):
-        return self.username
+    def verify_email(self):
+        pass

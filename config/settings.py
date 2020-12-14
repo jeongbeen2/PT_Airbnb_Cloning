@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ")4u%g5$i8wuyt$yi+!ocnlx5w!6hgv93@$fdwk6eqv$r#-lq*2"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -141,3 +141,16 @@ AUTH_USER_MODEL = "users.User"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"
+
+
+# Email Configuration
+""" #16.0 >> Email configuration with Mailgun """
+
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_POST = "587"
+EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
+
+""" #16.1 >> git, github에 정보를 숨기기위해, django-dotenv 설치. """
+
+""" 설치 후, .env파일에 넣어두고, manage.py 가서 main() 위에 dotenv.read_dotenv() 추가. """

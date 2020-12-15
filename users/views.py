@@ -4,6 +4,7 @@ from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from . import forms
 from . import models
+import os
 
 
 class LoginView(FormView):
@@ -66,3 +67,21 @@ def complete_verification(request, key):
     except models.User.DoesNotExist:
         pass  # to do: add error message
     return redirect(reverse("core:home"))
+
+
+def github_login(request):
+    client_id = os.environ.get("GH_ID")
+    redirect_uri = "http://127.0.0.1:8000/users/login/github/callback"
+    return redirect(
+        f"https://github.com/login/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&scope=read:user"
+    )
+
+
+def github_callback(request):
+    pass
+
+
+""" #17.0 >> 인증하는방법. """
+""" views에 _login 작성. """
+""" urls에 path 작성 """
+""" social_login.html 만든 후 {%url 'users:github-login'%} 작성 """

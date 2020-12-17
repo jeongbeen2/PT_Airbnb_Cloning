@@ -143,19 +143,24 @@ def github_callback(request):
         return redirect(reverse("users:login"))
 
 
-""" #17,2 >> access_token을 code에서 받은거로 request를 했는데, access_token은 두번 받을수 없다. """
-""" {'error': 'bad_verification_code', 'error_description': 'The code passed is incorrect or expired.',
- 'error_uri': 'https://docs.github.com/apps/managing-oauth-apps/troubleshooting-oauth-app-access-token-
- request-errors/#bad-verification-code'} """
+def kakao_login(request):
+    client_id = os.environ.get("KAKAO_ID")
+    redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
+    return redirect(
+        f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
+    )
 
-""" github API에 access token 보내기 """
+
+class KakaoException(Exception):
+    pass
 
 
-""" #17.2 >> 전체적인 흐름 """
-""" request에서 정보를 가져오고, 정보가 없다면 None값으로 정해준다. """
-""" ex> username = profile_json.get("login", None) """
-""" 그다음, 상황에맞게, username이 있다면 그대로 진행하고, 만약 username이 없다면 전 페이지로 return 해준다. """
-""" ex> return redirect(reverse("users:login")) """
-""" redirect(reverse("")) => ""페이지로 다시 돌려보냄. """
-
-""" #17.3 >> exception은 class로, 원하는만큼 만들어제낄수 있다. """
+def kakao_callback(request):
+    try:
+        code = request.GET.get("code", None)
+        client_id = os.environ.get("KAKAO_ID")
+        token_request = requests.get(
+            f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code?client_id={client_id}"
+        )
+    except KakaoException:
+        return redirect(reverse("users:login"))

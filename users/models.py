@@ -46,7 +46,7 @@ class User(AbstractUser):
 
     avatar = models.ImageField(upload_to="avatars", blank=True)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
-    Bio = models.TextField(blank=True)
+    bio = models.TextField(blank=True)
     birthdate = models.DateField(null=True)
     language = models.CharField(
         choices=LANGUAGE_CHOICES, max_length=5, blank=True, default=LANGUAGE_KOREAN

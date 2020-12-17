@@ -24,7 +24,7 @@ class CustomUserAdmin(UserAdmin):
             "NewBox",
             {
                 "fields": (
-                    "Bio",
+                    "bio",
                     "avatar",
                     "gender",
                     "birthdate",

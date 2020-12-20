@@ -7,14 +7,14 @@
     
 {% block content %}
 {% for room in rooms %}
-<h4>
+<h4 class="text-xl font-bold">
     <a href="{%url 'rooms:detail' room.pk %}">
         {{room.name}} / ${{room.price}}
     </a>
 </h4>
 {% endfor %}
 
-    <h5>
+    <h5 class="text-xl font-bold text-blue-700">
     
     {% if page_obj.has_previous %}
     <a href="?page={{page_obj.previous_page_number}}">Previous</a>

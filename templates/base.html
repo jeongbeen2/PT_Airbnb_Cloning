@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-    {% block page_title %}{% endblock page_title %} | Nbnb</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>{% block page_title %}{% endblock page_title %} | Nbnb</title>
 </head>
 <body>
 <header>
@@ -29,3 +30,5 @@
 
 </body>
 </html>
+<!-- #19.4 >> {%url 'rooms:search' %} 에서, url을 tag라고 부른다.-->
+<!-- npm run css는, scss파일을 수정했을때만 따로 해준다. -->

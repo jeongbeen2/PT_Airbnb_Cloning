@@ -133,7 +133,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# #19.4 >> URL은 말그대로 Server URL의 이름, DIRS는 폴더의 이름이다.
+# 둘은 전혀 상관없음.
 STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 AUTH_USER_MODEL = "users.User"
 

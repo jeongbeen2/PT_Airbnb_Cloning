@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from . import models
 
 """ #20.10 >> template에서의 placeholder는, form에서 widget=forms.EmailInput(attrs={"placeholder": "Email"}) """
@@ -24,7 +23,7 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 """ # 20.10 >> 장고에서 지정된 field는, Meta class 안에서 바꾼다. """
-class SignUpForm(UserCreationForm):
+class SignUpForm(forms.ModelForm): # UserCreationForm
     class Meta:
         model = models.User
         fields = ("first_name", "last_name", "email")
@@ -40,6 +39,16 @@ class SignUpForm(UserCreationForm):
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"})
     )
+    
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        try:
+            models.User.objects.get(email=email)
+            raise forms.ValidationError(
+            "That email is already taken", code="existing_user")
+        except models.User.DoesNotExist:
+            return email
+
 
     def clean_password1(self):
         password = self.cleaned_data.get("password")
